@@ -14,8 +14,7 @@ your_control_label<-"neg"
 # Load raw data 
 # NOTE: have commented all preDART commands out where there appear to be more options
 
-  ev<-read.table("IZz_sets_preDart.txt", header = TRUE)
-  ev<-read.delim("ev_updated_NS.DIA.txt")
+  ev<-read.delim("ev_updated_WallETMTDIA.txt")
 
 # Parse sp|Q00000|HUMAN_XXX into just Uniprot accession: Q00000  
 
@@ -323,9 +322,6 @@ hist(c(t4b), breaks=b.t, xlim=xlim.t)
 # Assign to a final variable name:
 ev.matrix.sc.f.n<-t4b
 
-#write.csv(t4b, "EpiToMesen.TGFB.nPoP_trial1_ProtByCellMatrix_NSThreshDART_medIntCrNorm_unimputed_formatFix.csv", row.names=T)
-
-
 ## Impute single celldata
 imp.input<-ev.matrix.sc.f.n
 sc.imp <- hknn(imp.input, k.t)
@@ -333,7 +329,7 @@ t5<-sc.imp
 sum(is.na(sc.imp))
 dim(sc.imp)
 
-#write.csv(t4b, "EpiToMesen.TGFB.nPoP_trial1_ProtByCellMatrix_NSThreshDART_medIntCrNorm_imputedNotBC.csv", row.names=T)
+#write.csv(t4b, "EpiToMesen.TGFB.nPoP_trial1_1PercDartFDRTMTBulkDIA.WallE_unimputed.txt", row.names=T)
 
 matrix.sc.batch <- t5
 
@@ -396,7 +392,7 @@ for(X in unique(pca.display$id)){
 ### Make PCA for publication
 # basically, get timepoint to cell ID map, join and plot
 pca.display_forPub <- pca.display
-timepointToID<-read.table("cellIDToTimepoint_NsDartUpdate.txt", header = TRUE)
+timepointToID<-read.table("cellIDToTimepoint_WallETMTDIADART.txt", header = TRUE)
 
 pca.display_forPub <- pca.display_forPub %>% left_join(timepointToID, by = "id")
 pca.display_forPub$celltype <- str_replace_all(pca.display_forPub$celltype, c("d0" = "Day 0", "d3" = "Day 3","d9" = "Day 9"))
